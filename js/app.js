@@ -39,9 +39,19 @@ function newGame() {
         [].forEach.call(shuffledCards, function(tile) {
             deck.appendChild(tile);
         });
+        shuffledCards[i].setAttribute('id', `card${i}`);
     }
 }
 
+//called to create a new board whenever page reloads
+window.addEventListener('load', function() {
+    newGame();
+});
+
+//restart button
+document.getElementById('restart').addEventListener('click', function() {
+    newGame();
+});
 
 /*
  * set up the event listener for a card. If a card is clicked:
