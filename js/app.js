@@ -1,5 +1,5 @@
 //the cards are stored in the cards array
-let card = document.getElementsByName('card');
+let card = document.getElementsByClassName('card');
 let cards = [...card];
 
 /*
@@ -32,7 +32,7 @@ function newGame() {
     tilesFlipped = 0;
 
     let shuffledCards = shuffle(cards);
-    let length = shuffledCards.lenght;
+    let length = shuffledCards.length;
 
     //adds the tiles/cards to the board
     for (let i = 0; i < length; i++) {
