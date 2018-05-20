@@ -1,15 +1,12 @@
-//the cards are stored in the cards array
+//@description the cards are stored in the cards array
 let card = document.getElementsByClassName('card');
 let cards = [...card];
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+//@description array to store the number of cards opened
+let flippedCards = [];
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+
+//@description Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length,
         temporaryValue, randomIndex;
@@ -25,41 +22,51 @@ function shuffle(array) {
     return array;
 }
 
+//@description deck holds the deck of cards
 const deck = document.getElementById('deck')
 
-//function @newGame restarts the game
+//@description function newGame restarts the game
 function newGame() {
     tilesFlipped = 0;
 
     let shuffledCards = shuffle(cards);
     let length = shuffledCards.length;
 
-    //adds the tiles/cards to the board
+    //@description adds the tiles/cards to the board
     for (let i = 0; i < length; i++) {
         [].forEach.call(shuffledCards, function(tile) {
             deck.appendChild(tile);
         });
         shuffledCards[i].setAttribute('id', `card${i}`);
     }
+
+    for (let i = 0; i < shuffledCards.length; i++) {
+        shuffledCards[i].addEventListener('click', function() {
+            flipCard(shuffledCards[i]);
+        });
+    }
 }
 
-//called to create a new board whenever page reloads
+//@description called to create a new board whenever page reloads
 window.addEventListener('load', function() {
     newGame();
 });
 
-//restart button
+//@description restart button
 document.getElementById('restart').addEventListener('click', function() {
     newGame();
 });
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+function flipCard(tile) {
+    flippedCards.push(tile);
+    let lenght = flippedCards.length;
+    if (lenght === 2) {
+        movesCounter();
+
+        if (flippedCards[0].type === flippedCards[1].type) {
+            checkMatched();
+        } else {
+            checkUnmatched();
+        }
+    }
+}
