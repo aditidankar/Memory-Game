@@ -5,21 +5,24 @@ const deck = document.getElementById('deck');
 let card = document.getElementsByClassName('card');
 let cards = [...card];
 
-//@description array to store the number of cards opened
+//@description variables to store the number of cards opened
 let flippedCards = [];
 let noOfFlippedCards = 0;
+let totalFlippedCards = 0;
 
 //@description variables for counting moves and stars
 let count = 0;
 let moves = document.getElementById('moves');
 let star = document.querySelectorAll('.fa-star');
 let stars = [...star];
+let noOfStars = 3;
 
 //@description variables for the timer
 let seconds = 1,
     minutes = 0,
     time = 0;
 let clicks = 0;
+let totalTimeTaken = 0;
 
 //@description Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -50,10 +53,11 @@ function newGame() {
             deck.appendChild(tile);
         });
         cards[i].setAttribute('id', `card${i}`);
-        cards[i].classList.remove("open", "show", "match");
+        cards[i].classList.remove("open", "show", "match", "freeze");
     }
 
     //reset timer
+    totalTimeTaken = 0;
     clicks = 0;
     clearInterval(time);
     document.getElementById('timer').innerHTML = `minutes 0 seconds 0`;
@@ -64,6 +68,10 @@ function newGame() {
     for (let i = 0; i < stars.length; i++) {
         stars[i].style.color = "#ffdd02";
     }
+
+    //reset variables containing the cards flipped
+    noOfCardsFlipped = 0;
+    totalFlippedCards = 0;
 }
 
 
@@ -78,7 +86,7 @@ function playGame() {
 
 //@description shows the card
 function showCard() {
-    this.classList.add("open", "show");
+    this.classList.add("open", "show", "freeze");
 }
 
 
@@ -97,15 +105,22 @@ function flipCard() {
 
 
 function cardMatched() {
-    flippedCards[0].classList.add("match");
-    flippedCards[1].classList.add("match");
+    flippedCards[0].classList.add("match", "freeze");
+    flippedCards[1].classList.add("match", "freeze");
     flippedCards = [];
     noOfFlippedCards = 0;
+
+    totalFlippedCards += 2;
+    if (totalFlippedCards == cards.length) {
+        totalTimeTaken = document.getElementsByClassName('timer')[0].innerHTML;
+        clearInterval(time);
+    }
 }
 
+
 function cardUnmatched() {
-    flippedCards[0].classList.remove("open", "show", "match");
-    flippedCards[1].classList.remove("open", "show", "match");
+    flippedCards[0].classList.remove("open", "show", "match", "freeze");
+    flippedCards[1].classList.remove("open", "show", "match", "freeze");
     flippedCards = [];
     noOfFlippedCards = 0;
 }
@@ -119,15 +134,19 @@ function countMoves() {
         for (let i = 0; i < stars.length; i++) {
             stars[i].style.color = "#ffdd02";
         }
+        noOfStars = 3;
     } else if (count > 16 && count <= 24) {
         stars[2].style.color = "#4a4747";
+        noOfStars = 2;
     } else if (count > 24 && count <= 32) {
         stars[2].style.color = "#4a4747";
         stars[1].style.color = "#4a4747";
+        noOfStars = 1;
     } else {
         for (let i = 0; i < stars.length; i++) {
             stars[i].style.color = "#4a4747";
         }
+        noOfStars = 0;
     }
 }
 
