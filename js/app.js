@@ -29,33 +29,47 @@ const deck = document.getElementById('deck')
 function newGame() {
     tilesFlipped = 0;
 
-    let shuffledCards = shuffle(cards);
-    let length = shuffledCards.length;
+    cards = shuffle(cards);
+    let length = cards.length;
 
     //@description adds the tiles/cards to the board
     for (let i = 0; i < length; i++) {
-        [].forEach.call(shuffledCards, function(tile) {
+        deck.innerHTML = "";
+        [].forEach.call(cards, function(tile) {
             deck.appendChild(tile);
         });
-        shuffledCards[i].setAttribute('id', `card${i}`);
+        cards[i].setAttribute('id', `card${i}`);
+        cards[i].classList.remove("open", "show", "match")
+
     }
 
-    for (let i = 0; i < shuffledCards.length; i++) {
-        shuffledCards[i].addEventListener('click', function() {
-            flipCard(shuffledCards[i]);
-        });
+}
+
+function playGame() {
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].addEventListener("click", showCard);
+        cards[i].addEventListener("click", flipCard);
     }
 }
+
 
 //@description called to create a new board whenever page reloads
 window.addEventListener('load', function() {
     newGame();
+    playGame();
 });
 
 //@description restart button
 document.getElementById('restart').addEventListener('click', function() {
     newGame();
+    playGame();
 });
+
+
+function showCard() {
+    this.classList.add("open", "show");
+}
+
 
 function flipCard(tile) {
     flippedCards.push(tile);
@@ -64,9 +78,18 @@ function flipCard(tile) {
         movesCounter();
 
         if (flippedCards[0].type === flippedCards[1].type) {
-            checkMatched();
+            cardMatched();
         } else {
-            checkUnmatched();
+            cardUnmatched();
         }
     }
+}
+
+
+function cardMatched() {
+
+}
+
+function cardUnmatched() {
+
 }
