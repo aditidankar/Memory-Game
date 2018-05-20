@@ -7,14 +7,19 @@ let cards = [...card];
 
 //@description array to store the number of cards opened
 let flippedCards = [];
+let noOfFlippedCards = 0;
 
-//@description variables for counting moves
-let moves = 0;
+//@description variables for counting moves and stars
+let count = 0;
+let moves = document.getElementById('moves')
+let star = document.querySelectorAll('.fa-star');
+let stars = [...star];
 
 //@description variables for the timer
 let seconds = 1,
     minutes = 0,
     time = 0;
+let clicks = 0;
 
 //@description Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -35,8 +40,6 @@ function shuffle(array) {
 
 //@description function newGame restarts the game
 function newGame() {
-    tilesFlipped = 0;
-
     cards = shuffle(cards);
     let length = cards.length;
 
@@ -50,6 +53,7 @@ function newGame() {
         cards[i].classList.remove("open", "show", "match")
     }
 
+    clicks = 0;
     clearInterval(time);
     document.getElementById('timer').innerHTML = `minutes 0 seconds 0`;
 }
@@ -71,12 +75,10 @@ function showCard() {
 
 
 function flipCard() {
-    timer();
     flippedCards.push(this);
-    let lenght = flippedCards.length;
-    if (lenght === 2) {
+    noOfFlippedCards++;
+    if (noOfFlippedCards === 2) {
         countMoves();
-
         if (flippedCards[0].type === flippedCards[1].type) {
             cardMatched();
         } else {
@@ -90,6 +92,7 @@ function cardMatched() {
     flippedCards[0].classList.add("match");
     flippedCards[1].classList.add("match");
     flippedCards = [];
+    noOfFlippedCards = 0;
 }
 
 function cardUnmatched() {
@@ -98,10 +101,13 @@ function cardUnmatched() {
 
 
 function countMoves() {
-
+    count++;
+    moves.innerHTML = count;
 }
 
-
+/**
+ * @description Timer function to keep track of time
+ */
 function timer() {
     time = setInterval(function() {
         document.getElementById('timer').innerHTML = `minutes ${minutes} seconds ${seconds}`;
@@ -114,12 +120,17 @@ function timer() {
 }
 
 
-
-
-
-
-
-
+/**
+ * @description This block of code is used to start the timer the first time any card on the deck is flipped
+ */
+document.querySelector('#deck').addEventListener('click', function(evt) {
+    if (evt.target.nodeName === 'LI') {
+        clicks++;
+        if (clicks === 1) {
+            timer();
+        }
+    }
+});
 
 
 //@description called to create a new board whenever page reloads
