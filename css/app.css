@@ -36,6 +36,9 @@ h1 {
 
 
 
+
+
+
 /*
  * Styles for the deck of cards
  */
@@ -86,6 +89,9 @@ h1 {
 
 
 
+
+
+
 /*
  * Styles for the Score Panel
  */
@@ -106,6 +112,7 @@ h1 {
 .score-panel .stars li {
     list-style: none;
     display: inline-block;
+    color: #ffdd02;
 }
 
 .timer {
