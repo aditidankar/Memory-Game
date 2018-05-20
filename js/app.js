@@ -1,5 +1,5 @@
 //@description deck holds the deck of cards
-const deck = document.getElementById('deck')
+const deck = document.getElementById('deck');
 
 //@description the cards are stored in the cards array
 let card = document.getElementsByClassName('card');
@@ -11,7 +11,7 @@ let noOfFlippedCards = 0;
 
 //@description variables for counting moves and stars
 let count = 0;
-let moves = document.getElementById('moves')
+let moves = document.getElementById('moves');
 let star = document.querySelectorAll('.fa-star');
 let stars = [...star];
 
@@ -50,12 +50,20 @@ function newGame() {
             deck.appendChild(tile);
         });
         cards[i].setAttribute('id', `card${i}`);
-        cards[i].classList.remove("open", "show", "match")
+        cards[i].classList.remove("open", "show", "match");
     }
 
+    //reset timer
     clicks = 0;
     clearInterval(time);
     document.getElementById('timer').innerHTML = `minutes 0 seconds 0`;
+
+    //reset moves and stars
+    count = 0;
+    moves.innerHTML = count;
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].style.color = "#ffdd02";
+    }
 }
 
 
@@ -68,7 +76,7 @@ function playGame() {
 }
 
 
-//@description flips the card
+//@description shows the card
 function showCard() {
     this.classList.add("open", "show");
 }
@@ -82,7 +90,7 @@ function flipCard() {
         if (flippedCards[0].type === flippedCards[1].type) {
             cardMatched();
         } else {
-            cardUnmatched();
+            setTimeout(cardUnmatched, 700);
         }
     }
 }
@@ -96,13 +104,31 @@ function cardMatched() {
 }
 
 function cardUnmatched() {
-
+    flippedCards[0].classList.remove("open", "show", "match");
+    flippedCards[1].classList.remove("open", "show", "match");
+    flippedCards = [];
+    noOfFlippedCards = 0;
 }
 
 
 function countMoves() {
     count++;
     moves.innerHTML = count;
+
+    if (count >= 0 && count <= 16) {
+        for (let i = 0; i < stars.length; i++) {
+            stars[i].style.color = "#ffdd02";
+        }
+    } else if (count > 16 && count <= 24) {
+        stars[2].style.color = "#4a4747";
+    } else if (count > 24 && count <= 32) {
+        stars[2].style.color = "#4a4747";
+        stars[1].style.color = "#4a4747";
+    } else {
+        for (let i = 0; i < stars.length; i++) {
+            stars[i].style.color = "#4a4747";
+        }
+    }
 }
 
 /**
@@ -116,7 +142,7 @@ function timer() {
             minutes++;
             seconds = 0;
         }
-    }, 1000)
+    }, 1000);
 }
 
 
