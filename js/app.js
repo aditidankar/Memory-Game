@@ -94,7 +94,7 @@ function showCard() {
     this.classList.add("open", "show", "freeze");
 }
 
-
+//@description actions taken with flipped cards
 function flipCard() {
     flippedCards.push(this);
     noOfFlippedCards++;
@@ -130,7 +130,7 @@ function cardUnmatched() {
     noOfFlippedCards = 0;
 }
 
-
+//@description function to count moves
 function countMoves() {
     count++;
     moves.innerHTML = count;
@@ -173,56 +173,38 @@ function timer() {
 //@description to open modal
 function openModal() {
     let totalTimeTaken = document.getElementsByClassName('timer')[0].innerHTML;
-    let starsLeft = document.querySelector('.stars').innerHTML;
+    //let starsLeft = document.querySelector('.stars').innerHTML;
     let movesTaken = document.getElementById('moves').innerHTML;
 
-    modalBody.innerHTML = `<p>You finished in ${movesTaken} moves.
+    //shows the number of moves, total time taken and number of stars on the modal
+    /*modalBody.innerHTML = `<p>You finished in ${movesTaken} moves.
     Time taken: ${totalTimeTaken}
-    Star Rating: ${noOfStars} ${starsLeft}</p>`;
+    Star Rating: ${noOfStars} stars!</p>`;*/
+    modalBody.innerHTML = "<p>You finished " + movesTaken + " moves<br>Time taken: " + totalTimeTaken + "<br>Star Rating: " + noOfStars + " stars!</p>";
 
     modal.style.display = "block";
 }
 
-/*
-
 
 //@description to close modal
 document.getElementById('close').addEventListener('click', function() {
-    modal.classList.remove("show");
+    modal.style.display = "none";
     newGame();
 });
 
 //@description to play again
 document.getElementById('play-again-button').addEventListener('click', function() {
-    modal.classList.remove("show");
+    modal.style.display = "none";
     newGame();
-});*/
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//@description to close modal when window is clicked
+window.addEventListener('click', function closeModalOutside(e) {
+    if (e.target == modal) {
+        modal.style.display = 'none';
+        newGame();
+    }
+});
 
 
 /**
