@@ -17,12 +17,18 @@ let star = document.querySelectorAll('.fa-star');
 let stars = [...star];
 let noOfStars = 3;
 
+
 //@description variables for the timer
 let seconds = 1,
     minutes = 0,
     time = 0;
 let clicks = 0;
-let totalTimeTaken = 0;
+
+//@description variables for the modal
+let modal = document.getElementById('modal');
+let modalBody = document.getElementsByClassName('modal-body')[0];
+let playAgain = document.getElementById('play-again-button');
+let closeButton = document.getElementById('close');
 
 //@description Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -57,7 +63,6 @@ function newGame() {
     }
 
     //reset timer
-    totalTimeTaken = 0;
     clicks = 0;
     clearInterval(time);
     document.getElementById('timer').innerHTML = `minutes 0 seconds 0`;
@@ -111,9 +116,9 @@ function cardMatched() {
     noOfFlippedCards = 0;
 
     totalFlippedCards += 2;
-    if (totalFlippedCards == cards.length) {
-        totalTimeTaken = document.getElementsByClassName('timer')[0].innerHTML;
+    if (totalFlippedCards === cards.length) {
         clearInterval(time);
+        openModal();
     }
 }
 
@@ -165,6 +170,61 @@ function timer() {
 }
 
 
+//@description to open modal
+function openModal() {
+    let totalTimeTaken = document.getElementsByClassName('timer')[0].innerHTML;
+    let starsLeft = document.querySelector('.stars').innerHTML;
+    let movesTaken = document.getElementById('moves').innerHTML;
+
+    modalBody.innerHTML = `<p>You finished in ${movesTaken} moves.
+    Time taken: ${totalTimeTaken}
+    Star Rating: ${noOfStars} ${starsLeft}</p>`;
+
+    modal.style.display = "block";
+}
+
+/*
+
+
+//@description to close modal
+document.getElementById('close').addEventListener('click', function() {
+    modal.classList.remove("show");
+    newGame();
+});
+
+//@description to play again
+document.getElementById('play-again-button').addEventListener('click', function() {
+    modal.classList.remove("show");
+    newGame();
+});*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * @description This block of code is used to start the timer the first time any card on the deck is flipped
  */
@@ -182,10 +242,12 @@ document.querySelector('#deck').addEventListener('click', function(evt) {
 window.addEventListener('load', function() {
     newGame();
     playGame();
+
 });
 
 //@description restart button
 document.getElementById('restart').addEventListener('click', function() {
     newGame();
     playGame();
+
 });
