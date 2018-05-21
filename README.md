@@ -24,3 +24,17 @@ Flipping cards:
    * What happens when cards match
    * What happens when cards do not match
    * When the game finishes
+
+## Methology Followed
+
+### Steps:
+   * Store and shuffle the deck of cards
+   * Add the shuffled cards to the board
+   * Add 'Restart Game' feature
+   * Add 'Flip Card' feature
+   * Add 'Play Game' feature
+   * Add Timer
+   * Add Star feature
+   * Add Responsive Design
+   * Add Modal
+
