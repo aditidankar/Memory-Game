@@ -9,6 +9,7 @@ let cards = [...card];
 let flippedCards = [];
 let noOfFlippedCards = 0;
 let totalFlippedCards = 0;
+let matchedCards = [];
 
 //@description variables for counting moves and stars
 let count = 0;
@@ -64,6 +65,8 @@ function newGame() {
 
     //reset timer
     clicks = 0;
+    seconds = 0;
+    minutes = 0;
     clearInterval(time);
     document.getElementById('timer').innerHTML = `minutes 0 seconds 0`;
 
@@ -103,15 +106,18 @@ function flipCard() {
         if (flippedCards[0].type === flippedCards[1].type) {
             cardMatched();
         } else {
-            setTimeout(cardUnmatched, 700);
+            cardUnmatched();
         }
     }
 }
 
 
+//@description actions taken if the cards match
 function cardMatched() {
     flippedCards[0].classList.add("match", "freeze");
     flippedCards[1].classList.add("match", "freeze");
+    flippedCards[0].classList.remove("open", "show");
+    flippedCards[1].classList.remove("open", "show");
     flippedCards = [];
     noOfFlippedCards = 0;
 
@@ -123,11 +129,35 @@ function cardMatched() {
 }
 
 
+//@description actions taken if the cards don't match
 function cardUnmatched() {
-    flippedCards[0].classList.remove("open", "show", "match", "freeze");
-    flippedCards[1].classList.remove("open", "show", "match", "freeze");
-    flippedCards = [];
-    noOfFlippedCards = 0;
+    disableCards();
+    setTimeout(function() {
+        flippedCards[0].classList.remove("open", "show", "match", "freeze");
+        flippedCards[1].classList.remove("open", "show", "match", "freeze");
+        flippedCards = [];
+        noOfFlippedCards = 0;
+        enableCards();
+    }, 1000);
+}
+
+
+// @description disable cards temporarily
+function disableCards() {
+    Array.prototype.filter.call(cards, function(card) {
+        card.classList.add('freeze');
+    });
+}
+
+
+// @description enable cards and disable matched cards
+function enableCards() {
+    Array.prototype.filter.call(cards, function(card) {
+        card.classList.remove('freeze');
+        for (var i = 0; i < matchedCards.length; i++) {
+            matchedCard[i].classList.add("freeze");
+        }
+    });
 }
 
 //@description function to count moves
@@ -143,15 +173,10 @@ function countMoves() {
     } else if (count > 16 && count <= 24) {
         stars[2].style.color = "#4a4747";
         noOfStars = 2;
-    } else if (count > 24 && count <= 32) {
+    } else {
         stars[2].style.color = "#4a4747";
         stars[1].style.color = "#4a4747";
         noOfStars = 1;
-    } else {
-        for (let i = 0; i < stars.length; i++) {
-            stars[i].style.color = "#4a4747";
-        }
-        noOfStars = 0;
     }
 }
 
@@ -177,10 +202,9 @@ function openModal() {
     let movesTaken = document.getElementById('moves').innerHTML;
 
     //shows the number of moves, total time taken and number of stars on the modal
-    /*modalBody.innerHTML = `<p>You finished in ${movesTaken} moves.
-    Time taken: ${totalTimeTaken}
-    Star Rating: ${noOfStars} stars!</p>`;*/
-    modalBody.innerHTML = "<p>You finished " + movesTaken + " moves<br>Time taken: " + totalTimeTaken + "<br>Star Rating: " + noOfStars + " stars!</p>";
+    modalBody.innerHTML = `<p>You finished in ${movesTaken} moves.<br>
+    Time taken: ${totalTimeTaken}<br>
+    Star Rating: ${noOfStars} stars!</p>`;
 
     modal.style.display = "block";
 }
