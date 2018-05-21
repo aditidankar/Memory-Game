@@ -1,0 +1,44 @@
+@media screen and (max-width: 520px) {
+    .container {
+        font-size: 0.5em;
+    }
+
+    .deck {
+        width: 300px;
+        height: 300px;
+    }
+
+    .deck .card {
+        width: 5rem;
+        height: 5rem;
+    }
+}
+
+
+
+@media screen and (max-width: 680px) {
+    .container {
+        font-size: 0.75em;
+    }
+
+    .deck {
+        width: 540px;
+        height: 540px;
+    }
+
+    .deck .card {
+        width: 6rem;
+        height: 6rem;
+    }
+}
+
+@media screen and (min-width: 850px) {
+
+    .container {
+        font-size: 1em;
+    }
+    .deck {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
