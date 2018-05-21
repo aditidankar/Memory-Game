@@ -31,10 +31,6 @@
 }
 
 @media screen and (min-width: 850px) {
-
-    .container {
-        font-size: 1em;
-    }
     .deck {
         margin-left: auto;
         margin-right: auto;
