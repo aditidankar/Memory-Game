@@ -18,7 +18,6 @@ let star = document.querySelectorAll('.fa-star');
 let stars = [...star];
 let noOfStars = 3;
 
-
 //@description variables for the timer
 let seconds = 1,
     minutes = 0,
@@ -30,6 +29,7 @@ let modal = document.getElementById('modal');
 let modalBody = document.getElementsByClassName('modal-body')[0];
 let playAgain = document.getElementById('play-again-button');
 let closeButton = document.getElementById('close');
+
 
 //@description Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -97,7 +97,8 @@ function showCard() {
     this.classList.add("open", "show", "freeze");
 }
 
-//@description actions taken with flipped cards
+
+//@description actions taken when cards are flipped
 function flipCard() {
     flippedCards.push(this);
     noOfFlippedCards++;
@@ -160,6 +161,7 @@ function enableCards() {
     });
 }
 
+
 //@description function to count moves
 function countMoves() {
     count++;
@@ -179,6 +181,7 @@ function countMoves() {
         noOfStars = 1;
     }
 }
+
 
 /**
  * @description Timer function to keep track of time
@@ -248,12 +251,10 @@ document.querySelector('#deck').addEventListener('click', function(evt) {
 window.addEventListener('load', function() {
     newGame();
     playGame();
-
 });
 
 //@description restart button
 document.getElementById('restart').addEventListener('click', function() {
     newGame();
     playGame();
-
 });

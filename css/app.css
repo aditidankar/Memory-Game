@@ -54,6 +54,12 @@ h1 {
 
 
 
+
+
+
+
+
+
 /*
 * Styles for the deck of cards
 */
@@ -106,6 +112,12 @@ h1 {
 .deck .card.freeze {
     pointer-events: none;
 }
+
+
+
+
+
+
 
 
 
